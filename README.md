@@ -1,6 +1,3 @@
-Great! Here's a basic template for your GitHub project description for "ShopSerenity," an e-commerce website. You can customize it further based on your specific project details:
-
----
 
 # ShopSerenity
 
