@@ -15,24 +15,22 @@ class BrandController extends Controller
 
     public function index()
     {
-        $data = Brands::all();
-        // dd($data);
-
+        $data = Brands::orderBy('id', 'desc')->get();
         return view('admin.brand.index', compact('data'));
     }
 
     public function search(Request $request)
     {
-
-        //dd($request->search);
         $search = $request->search;
-        $data = Brands::query()
-            ->where('name', 'LIKE', "%{$search}%");
 
+        // Fetching the brands that match the search query
+        $data = Brands::orderBy('id', 'desc')
+            ->where('name', 'LIKE', "%{$search}%")
+            ->get(); // Execute the query to get the results
 
-        //dd($data);
         return view('admin.brand.index', compact('data'));
     }
+
 
     public function create()
     {

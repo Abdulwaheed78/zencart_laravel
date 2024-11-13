@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Shop Serenity</title>
+    <title>ZenCart</title>
     <meta name="description" content="" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
@@ -64,8 +64,7 @@
             <div class="row align-items-center py-3 d-none d-lg-flex justify-content-between">
                 <div class="col-lg-4 logo">
                     <a href="{{ route('front.home') }}" class="text-decoration-none">
-                        <span class="h1 text-dark  px-2">ShopSerenity</span>
-
+                        <span class="h1 text-dark  px-2">ZenCart</span>
                     </a>
                 </div>
 
@@ -120,16 +119,11 @@
     </div>
 
 
-
-
-
-
-    <header class="bg-dark">
+    <header class="bg-white">
         <div class="container">
             <nav class="navbar navbar-expand-xl" id="navbar">
                 <a href="index.php" class="text-decoration-none mobile-logo">
-                    <span class="h2  text-white bg-dark">ShopSerenity</span>
-
+                    <span class="h2  text-white bg-dark">ZenCart</span>
                 </a>
                 <button class="navbar-toggler menu-btn" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -139,22 +133,15 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <!-- <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php" title="Products">Home</a>
-        </li> -->
                         @foreach (getCategories() as $category)
                             <li class="nav-item ">
-                                <a class="dropdown-item nav-link "
+                                <a class="dropdown-item nav-link text-dark "
                                     href="{{ route('front.shop', $category->slug) }}"><img
                                         style="heught:40px;width:40px; border-radius:5px"
-                                        src="{{ asset('Storage/' . $category->image) }}"
+                                        src="{{ asset($category->image) }}"
                                         alt="Not Found">{{ $category->name }}</a>
                             </li>
                         @endforeach
-
-
-
-
                     </ul>
                 </div>
 
@@ -224,7 +211,7 @@
                     <div class="col-12 mt-3">
                         <div class="copy-right text-center">
                             <strong>
-                                <p class="text-dark">© Copyright 2022 ShopSerenity. All Rights Reserved</p>
+                                <p class="text-dark">© Copyright 2024 ZenCart. All Rights Reserved</p>
                             </strong>
                         </div>
                     </div>

@@ -12,13 +12,12 @@
     </section>
 
 
-
     <section class="section-6 pt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 sidebar">
                     <div class="sub-title">
-                        <h2 style="background-color: #f8ede8">SubCategories</h2>
+                        <h2 style="background-color: #f8ede8">Categories</h2>
                     </div>
 
                     <div class="card" style="border-radius: 10px;">
@@ -27,42 +26,11 @@
                                 @if ($categories->isNotEmpty())
                                     @foreach ($categories as $key => $category)
                                         <div class="accordion-item">
-
-                                            @if ($category->sub_category->isNotEmpty())
-                                                <h2 class="accordion-header" id="headingOne">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseOne-{{ $key }}"
-                                                        aria-expanded="false"
-                                                        aria-controls="collapseOne-{{ $key }}">
-                                                        {{ $category->name }}
-                                                    </button>
-                                                </h2>
-                                            @else
-                                                <a href="{{ route('front.shop', $category->slug) }}"
-                                                    class="nav-item nav-link  {{ $categorySelected == $category->id ? 'text-primary' : '' }}">{{ $category->name }}</a>
-                                            @endif
-
-                                            @if ($category->sub_category->isNotEmpty())
-                                                <div id="collapseOne-{{ $key }}"
-                                                    class="accordion-collapse collapse  {{ $categorySelected == $category->id ? 'show' : '' }}"
-                                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                        <div class="navbar-nav">
-                                                            @foreach ($category->sub_category as $sub_category)
-                                                                <a href="{{ route('front.shop', [$category->slug, $sub_category->slug]) }}"
-                                                                    class="nav-item nav-link  {{ $subCategorySelected == $sub_category->id ? 'text-primary' : '' }}">{{ $sub_category->name }}</a>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-
+                                            <a href="{{ route('front.shop', $category->slug) }}"
+                                                class="nav-item nav-link  {{ $categorySelected == $category->id ? 'text-primary' : '' }}">{{ $category->name }}</a>
                                         </div>
                                     @endforeach
                                 @endif
-
-
 
                             </div>
                         </div>
@@ -88,6 +56,7 @@
                             @endif
                         </div>
                     </div>
+
                     <div class="sub-title mt-5">
                         <h2 style="background-color: #f8ede8">Price</h2>
                     </div>
@@ -109,15 +78,14 @@
                                 <div class="ml-2">
                                     <div class="btn-group">
                                         <select name="sort" id="sort" class="form-control">
-                                            <option value="latest" {{($sort=='latest')? 'selected':''}}>Latest</option>
-                                            <option value="price_desc" {{($sort=='price_desc')? 'selected':''}}>Price High</option>
-                                            <option value="price_asc" {{($sort=='price_asc')? 'selected':''}}>Price Low</option>
+                                            <option value="latest" {{ $sort == 'latest' ? 'selected' : '' }}>Latest</option>
+                                            <option value="price_desc" {{ $sort == 'price_desc' ? 'selected' : '' }}>Price
+                                                High</option>
+                                            <option value="price_asc" {{ $sort == 'price_asc' ? 'selected' : '' }}>Price Low
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
-
-
-
 
                             </div>
                         </div>
@@ -194,7 +162,7 @@
         });
 
 
-        $("#sort").change(function(){
+        $("#sort").change(function() {
             apply_filters();
         })
 
@@ -217,7 +185,7 @@
 
             url += 'price_min=' + slider.result.from + '&price_max=' + slider.result.to;
 
-            url +='&sort='+$("#sort").val();
+            url += '&sort=' + $("#sort").val();
 
             if (brands.length > 0) {
                 url += '&brand=' + brands.toString();

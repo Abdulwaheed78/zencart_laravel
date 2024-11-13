@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Shop :: Administrative Panel</title>
+    <title>ZenCart Admin Panel</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="{{ asset('admin-assets/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/plugins/summernote/summernote.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/css/custom.css') }}">
-
-
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -31,12 +29,6 @@
                             class="fas fa-bars"></i></a>
                 </li>
             </ul>
-            <div class="navbar-nav pl-2">
-                <!-- <ol class="breadcrumb p-0 m-0 bg-white">
-      <li class="breadcrumb-item active">Dashboard</li>
-     </ol> -->
-            </div>
-
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -50,13 +42,17 @@
                             width="40" height="40" alt="">
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
-                        <h4 class="h4 mb-0"><strong>{{ Auth::guard('admin')->user()->name }}</strong></h4>
-                        <div class="mb-3">{{ Auth::guard('admin')->user()->email }}</div>
-                        <div class="dropdown-divider"></div>
+                        @auth('admin')
+                            <h4 class="h4 mb-0"><strong>{{ Auth::guard('admin')->user()->name }}</strong></h4>
+                            <div class="mb-3">{{ Auth::guard('admin')->user()->email }}</div>
+                        @endauth
+
+                        <a href="" class="dropdown-item text-primary">
+                            <i class="fas fa-solid fa-key"></i> Change Password
+                        </a>
 
                         <div class="dropdown-divider"></div>
 
-                        <div class="dropdown-divider"></div>
                         <a href="{{ route('admin.logout') }}" class="dropdown-item text-danger">
                             <i class="fas fa-sign-out-alt mr-2"></i> Logout
                         </a>
@@ -74,9 +70,8 @@
         <!-- /.content-wrapper -->
         <center>
             <footer class="main-footer fixed">
-                <strong>Copyright &copy; 2014 ShopSerenity. All rights reserved.</strong>
+                <strong>Copyright &copy; 2024 ZenCart. All rights reserved.</strong>
             </footer>
-
         </center>
 
     </div>

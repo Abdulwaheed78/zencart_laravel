@@ -21,7 +21,7 @@
         @include('admin.message')
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="#" class="h3">Administrative Panel</a>
+                <a href="#" class="h3">Admin Panel</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -56,23 +56,13 @@
                     </div>
 
                     <div class="row">
-                        <!-- <div class="col-8">
-     <div class="icheck-primary">
-         <input type="checkbox" id="remember">
-         <label for="remember">
-      Remember Me
-         </label>
-     </div>
-       </div> -->
-                        <!-- /.col -->
                         <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
-                        <!-- /.col -->
                     </div>
                 </form>
                 <p class="mb-1 mt-3">
-                    <a href="forgot-password.html">I forgot my password</a>
+                    <a href="">I forgot my password</a>
                 </p>
             </div>
             <!-- /.card-body -->

@@ -11,6 +11,8 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\bannerController;
+
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -118,17 +120,6 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 
-        //sub subcategory routes
-
-
-        Route::get('/subcategories', [SubCategoryController::class, 'index'])->name('subcategories.index'); // working
-        Route::get('/subcategories/create', [SubCategoryController::class, 'create'])->name('subcategories.create'); //working
-        Route::post('/Subcategories/create', [SubCategoryController::class, 'store'])->name('subcategories.store'); //working
-        Route::get('/subcategories/{id}/edit', [SubCategoryController::class, 'edit'])->name('subcategories.edit');
-        Route::post('/subcategories/{id}/edit', [SubCategoryController::class, 'update'])->name('subcategories.update');
-        Route::get('/subcategories/{id}/delete', [SubCategoryController::class, 'destroy'])->name('subcategories.destroy');
-
-        Route::get('/subcategories/search', [SubCategoryController::class, 'search'])->name('subcategories.search');
 
         //  brands route
 
@@ -156,9 +147,27 @@ Route::group(['prefix' => 'admin'], function () {
         route::get('/orders', [OrdersController::class, 'index'])->name('order.index');
         Route::get('/orders/search', [OrdersController::class, 'search'])->name('orders.search');
 
-        Route::get('/orders/{id}', [OrdersController::class,'show'])->name('orders.show');
-        Route::get('/orders/{orderId}/print-receipt', [OrdersController::class,'generatePDF'])->name('orders.printReceipt');
-        Route::post('/update-order-item-status/{orderItemId}', [OrdersController::class,'updateOrderItemStatus'])->name('update-order-item-status');
+        Route::get('/orders/{id}', [OrdersController::class, 'show'])->name('orders.show');
+        Route::get('/orders/{orderId}/print-receipt', [OrdersController::class, 'generatePDF'])->name('orders.printReceipt');
+        Route::post('/update-order-item-status/{orderItemId}', [OrdersController::class, 'updateOrderItemStatus'])->name('update-order-item-status');
 
+
+        //banner routes
+        Route::get('/banner', [bannerController::class, 'index'])->name('banner.index'); // working
+        Route::get('/banner/create', [bannerController::class, 'create'])->name('banner.create'); //working
+        Route::post('/banner/create', [bannerController::class, 'store'])->name('banner.store'); //working
+        Route::get('/banner/{id}/edit', [bannerController::class, 'edit'])->name('banner.edit');
+        Route::post('/banner/{id}/edit', [bannerController::class, 'update'])->name('banner.update');
+        Route::get('/banner/{id}/delete', [bannerController::class, 'destroy'])->name('banner.destroy');
+        Route::get('/banner/search', [bannerController::class, 'search'])->name('banner.search');
+
+        //customers routes
+        Route::get('/customer', [bannerController::class, 'index'])->name('customer.index'); // working
+        Route::get('/customer/create', [bannerController::class, 'create'])->name('customer.create'); //working
+        Route::post('/customer/create', [bannerController::class, 'store'])->name('customer.store'); //working
+        Route::get('/customer/{id}/edit', [bannerController::class, 'edit'])->name('customer.edit');
+        Route::post('/customer/{id}/edit', [bannerController::class, 'update'])->name('customer.update');
+        Route::get('/customer/{id}/delete', [bannerController::class, 'destroy'])->name('customer.destroy');
+        Route::get('/customer/search', [bannerController::class, 'search'])->name('customer.search');
     });
 });

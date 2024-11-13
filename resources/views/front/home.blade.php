@@ -5,61 +5,31 @@
         <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel"
             data-bs-interval="false">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <!-- <img src="images/carousel-1.jpg" class="d-block w-100" alt=""> -->
+                @foreach ($banner as $index => $banner)
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
 
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-1-m.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-1.jpg') }}" />
-                        <img src="{{ asset('front-assets/images/carousel-1.jpg') }}" alt="" />
-                    </picture>
+                        <div style="display: flex; justify-content: center;">
+                            <picture>
+                                <source media="(max-width: 799px)" srcset="{{ asset($banner->image) }}" />
+                                <source media="(min-width: 800px)" srcset="{{ asset($banner->image) }}" />
+                                <img src="{{ asset($banner->image) }}" class="img-fluid" alt="{{ $banner->title }}"
+                                    style="height: 700px; width: auto; object-fit: contain;" />
+                            </picture>
+                        </div>
 
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Kids Fashion</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo
-                                stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('front.shop') }}">Shop Now</a>
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3">
+                                <h1 class="display-4 text-white mb-3">{{ $banner->title }}</h1>
+                                <p class="mx-md-5 px-5">{{ $banner->description }}</p>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3" href="/shop">Shop
+                                    Now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item">
+                @endforeach
 
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-2-m.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-2.jpg') }}" />
-                        <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
-                    </picture>
-
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Womens Fashion</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo
-                                stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('front.shop') }}">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <!-- <img src="images/carousel-3.jpg" class="d-block w-100" alt=""> -->
-
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assetsimages/carousel-3-m.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-3.jpg') }}" />
-                        <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
-                    </picture>
-
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Shop Online at Flat 70% off on Branded Clothes
-                            </h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo
-                                stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('front.shop') }}">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
             </div>
+
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

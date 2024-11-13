@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Brands;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Models\SubCategories;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -44,9 +43,7 @@ class ProductController extends Controller
 
     public function create()
     {
-
         $category = Category::all();
-        $subcategory = SubCategories::all();
         $brand = Brands::all();
         return view('admin.products.create', compact('category', 'subcategory', 'brand'));
     }
@@ -64,12 +61,9 @@ class ProductController extends Controller
                 'compare_price' => 'nullable|numeric',
                 'status' => 'required|in:0,1',
                 'category_id' => 'required|exists:categories,id',
-                'sub_category_id' => 'required|exists:sub_categories,id',
                 'brand_id' => 'required|exists:brands,id',
                 'is_featured' => 'required|in:0,1',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust max file size as needed
-
-
                 // Store product data in the products table
 
             ]);
@@ -85,7 +79,6 @@ class ProductController extends Controller
             $product->compare_price = $request->input('compare_price');
             $product->status = $request->input('status');
             $product->category_id = $request->input('category_id');
-            $product->sub_category_id = $request->input('sub_category_id');
             $product->brand_id = $request->input('brand_id');
             $product->is_featured = $request->input('is_featured');
             $product->save();
@@ -114,7 +107,6 @@ class ProductController extends Controller
     {
 
         $category = Category::all();
-        $subcategory = SubCategories::all();
         $brand = Brands::all();
         $data = Product::with('images')->findOrFail($id);
         return view('admin.products.edit', compact('data', 'category', 'subcategory', 'brand'));
@@ -123,20 +115,16 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-
-
         $product->title = $request->input('title');
         $product->slug = Str::slug($request->input('title'));
         $product->description = $request->input('description');
         $product->Short_desc = $request->input('short_desc');
-
         $product->shipping_returns = $request->input('shipping_returns');
 
         $product->price = $request->input('price');
         $product->compare_price = $request->input('compare_price');
         $product->status = $request->input('status');
         $product->category_id = $request->input('category_id');
-        $product->sub_category_id = $request->input('subcategory_id');
         $product->brand_id = $request->input('brand_id');
         $product->is_featured = $request->input('is_featured');
         $product->save();
@@ -156,10 +144,6 @@ class ProductController extends Controller
         // Your code for saving the product and image
     }
 
-
-
-
-
     public function destroy($id)
     {
         $delete = Product::findOrFail($id);
@@ -167,9 +151,5 @@ class ProductController extends Controller
         $delete->delete();
         return redirect()->route('product.index')->with('error', 'data deleted successfully');
     }
-
-
-
-
 
 }

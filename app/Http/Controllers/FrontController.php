@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\banner;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -21,8 +22,10 @@ class FrontController extends Controller
 
         $products = Product::where('is_featured', 'Yes')->where('status', 1)->take(20)->get();
         $latest = Product::orderBy('id', 'desc')->where('status', 1)->take(20)->get();
+        $banner=banner::orderBy('id','desc')->where('status','YES')->get();
         $data['featuredproducts'] = $products;
         $data['latest'] = $latest;
+        $data['banner']=$banner;
         return view('front.home', $data);
     }
 
@@ -193,17 +196,16 @@ class FrontController extends Controller
     }
     public function getpage($slug)
     {
-        $category1 = Category::where('slug',$slug)->get();
-        $category=$category1[0]->id;
+        $category1 = Category::where('slug', $slug)->get();
+        $category = $category1[0]->id;
         //dd($category);
 
         if (!$category) {
             return response()->json(['error' => 'Category not found'], 404);
         }
-$products=Product::where('category_id',$category)->get();
-$subcategory=SubCategories::where('category_id',$category)->get();
+        $products = Product::where('category_id', $category)->get();
 
 
-        return view('front.testshop',compact('products','category1','subcategory'));
+        return view('front.testshop', compact('products', 'category1', 'subcategory'));
     }
 }

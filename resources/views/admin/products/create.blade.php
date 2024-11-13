@@ -127,15 +127,6 @@
                                     </select>
 
                                 </div>
-                                <div class="mb-3">
-                                    <label for="category">Sub category</label>
-
-                                    <select name="sub_category_id" id="subcategorySelect" class="form-control">
-                                        <option value="" selected="">Add a SubCategory here</option>
-
-                                    </select>
-
-                                </div>
                             </div>
                         </div>
                         <div class="card mb-3">
@@ -177,27 +168,5 @@
         <!-- /.card -->
     </section>
 @endsection
-
-
-
 @section('customjs')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('categorySelect').addEventListener('change', function() {
-                var selectedCategoryId = this.value;
-                var subcategorySelect = document.getElementById('subcategorySelect');
-
-                // Clear previous subcategory options
-                subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-
-                // Retrieve subcategories based on selected category
-                @foreach ($subcategory as $sub)
-                    if ({{ $sub->category->id }} == selectedCategoryId) {
-                        subcategorySelect.innerHTML +=
-                            '<option value="{{ $sub->id }}">{{ $sub->name }}</option>';
-                    }
-                @endforeach
-            }); // Your code here
-        });
-    </script>
 @endsection

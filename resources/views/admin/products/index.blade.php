@@ -46,7 +46,6 @@
                                 <th>Price</th>
                                 <th>Slug</th>
                                 <th>Category</th>
-                                <th>Sub Category</th>
                                 <th>Brand</th>
                                 <th width="100">Status</th>
                                 <th width="100">Action</th>
@@ -63,7 +62,6 @@
                                     <td> {{ $Product->slug }}
                                     </td>
                                     <td>{{ $Product->category->name }}</td>
-                                    <td>{{ $Product->subcategory ? $Product->subcategory->name : 'null' }}</td>
 
                                     <td>{{ $Product->brands->name }}</td>
 

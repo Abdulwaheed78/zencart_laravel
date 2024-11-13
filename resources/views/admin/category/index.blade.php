@@ -67,7 +67,7 @@
                                     @foreach ($data as $key => $data)
                                         <tr>
                                             <td> {{ ++$key }}</td>
-                                            <td><img src="{{ asset('storage/' . $data->image) }}" alt="product image"
+                                            <td><img src="{{ asset($data->image) }}" alt="product image"
                                                     height="50px" width="50px">{{ $data->name }}</td>
                                             <td>{{ $data->slug }}</td>
                                             <!--this area is for status symbol-->

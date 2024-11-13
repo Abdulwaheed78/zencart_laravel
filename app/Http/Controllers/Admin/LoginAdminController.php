@@ -35,11 +35,10 @@ class LoginAdminController extends Controller
             ], $request->get('remember'))) {
                 $admin = Auth::guard('admin')->user();
                 if ($admin->role == 2) {
-                    return redirect()->route('admin.dashboard');
+                    return redirect()->route('admin.dashboard')->with('admin', $admin);
                 } else {
                     Auth::guard('admin')->logout();
-
-                    return redirect()->route('admin.login')->with('error', 'You are not authorized to access admin pannel');
+                    return redirect()->route('admin.login')->with('error', 'You are not authorized to access admin panel');
                 }
             } else {
                 return redirect()->route('admin.login')->with('error', 'Either email or password is incorrect ');
@@ -58,34 +57,30 @@ class LoginAdminController extends Controller
     }
 
 
-
-
-
     // ...
 
     public function changePassword(Request $request)
-{
-    $validator = validator::make($request->all(), [
-        'current_password' => 'required',
-        'new_password' => 'required|string|min:8|confirmed',
-    ]);
+    {
+        $validator = validator::make($request->all(), [
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
 
-    if ($validator->passes()) {
-        $user = Auth::guard('admin')->user();
+        if ($validator->passes()) {
+            $user = Auth::guard('admin')->user();
 
-        if (Hash::check($request->current_password, $user->password)) {
-            // The current password matches, proceed to change the password
-            $user->update([
-                'password' => Hash::make($request->new_password),
-            ]);
+            if (Hash::check($request->current_password, $user->password)) {
+                // The current password matches, proceed to change the password
+                $user->update([
+                    'password' => Hash::make($request->new_password),
+                ]);
 
-            return redirect()->route('admin.dashboard')->with('success', 'Password changed successfully');
+                return redirect()->route('admin.dashboard')->with('success', 'Password changed successfully');
+            } else {
+                return redirect()->route('admin.changePassword')->with('error', 'Current password is incorrect');
+            }
         } else {
-            return redirect()->route('admin.changePassword')->with('error', 'Current password is incorrect');
+            return redirect()->route('admin.changePassword')->withErrors($validator);
         }
-    } else {
-        return redirect()->route('admin.changePassword')->withErrors($validator);
     }
-}
-
 }

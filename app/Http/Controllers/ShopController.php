@@ -17,10 +17,7 @@ class ShopController extends Controller
         $subCategorySelected = '';
         $brandArray = [];
 
-
-
-
-        $categories = Category::orderBy('name', 'ASC')->with('sub_category')->where('status', 1)->get();
+        $categories = Category::orderBy('name', 'ASC')->where('status', 1)->get();
         $brands = Brands::orderBy('name', 'ASC')->where('status', 1)->get();
         $products = Product::where('status', 1);
 
@@ -29,12 +26,6 @@ class ShopController extends Controller
             $category = Category::where('slug', $categorySlug)->first();
             $products = $products->where('category_id', $category->id);
             $categorySelected = $category->id;
-        }
-
-        if (!empty($subCategorySlug)) {
-            $subCategory = SubCategories::where('slug', $subCategorySlug)->first();
-            $products = $products->where('sub_category_id', $subCategory->id);
-            $subCategorySelected = $subCategory->id;
         }
 
 

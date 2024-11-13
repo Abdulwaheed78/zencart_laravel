@@ -53,7 +53,7 @@
                                     <label for="name">Image</label>
                                     <input type="file" name="image" value="" id="image" class="form-control mb-1"
                                         placeholder="Name" >
-                                        <img src="{{asset("storage/".$data->image)}}" height="75px"  width="75px"alt="not found">
+                                        <img src="{{asset($data->image)}}" height="75px"  width="75px"alt="not found">
 
                                     <p></p>
                                 </div>

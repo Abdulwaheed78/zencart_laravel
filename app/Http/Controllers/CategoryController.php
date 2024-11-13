@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+
 class CategoryController extends Controller
 {
     public function index()
@@ -17,17 +18,18 @@ class CategoryController extends Controller
         return view('admin.category.index', compact('data'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
 
         //dd($request->search);
-        $search=$request->search;
-        $data=Category::query()
+        $search = $request->search;
+        $data = Category::query()
             ->where('name', 'LIKE', "%{$search}%")
             ->get();
 
 
-            //dd($data);
-        return view('admin.category.index',compact('data'));
+        //dd($data);
+        return view('admin.category.index', compact('data'));
     }
     public function create()
     {
@@ -48,26 +50,39 @@ class CategoryController extends Controller
 
         if ($existingCategory) {
             return redirect()->back()->withInput()->withErrors(['name' => 'Category already exists.']);
-        }else{
+        } else {
 
 
-        //Category::create($request->all());
-        $category = new Category();
-        $category->name = $request->name;
-        $category->slug = Str::slug($request->name);
-        $category->status = $request->status;
-        $imagePath = $request->file('image')->store('category_images', 'public');
-        $category->showhome = $request->showhome;
-        $category->image = $imagePath;
-        //$request->save();
+            //Category::create($request->all());
+            $category = new Category();
+            $category->name = $request->name;
+            $category->slug = Str::slug($request->name);
+            $category->status = $request->status;
+            // Check if an image file is present and save it directly in public/images/banner
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = $image->getClientOriginalName();
 
+                // Define the path directly within the public directory
+                $destinationPath = public_path('images/category');
+
+                // Ensure the directory exists
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0755, true); // Create the directory with proper permissions
+                }
+
+                // Move the file to the public/images/banner directory
+                $image->move($destinationPath, $imageName);
+
+                // Save the relative path to the database
+                $category->image = 'images/category/' . $imageName;
+            }
+            $category->showhome = $request->showhome;
         }
 
         if ($category->save()) {
-
-            return redirect()->route('categories.index')->with('success','category created successfully');
+            return redirect()->route('categories.index')->with('success', 'category created successfully');
         } else {
-
             return redirect()->back();
         }
     }
@@ -90,25 +105,43 @@ class CategoryController extends Controller
         $category->slug = Str::slug($request->input('name'));
         $category->status = $request->input('status');
         $category->showhome = $request->showhome;
-        if ($request->hasFile('image')){
-            if ($category->image) {
-                // Assuming 'public' is the disk name
-                Storage::delete('storage/'.$category->image);
+
+        // Check if an image file is present and handle the upload
+        if ($request->hasFile('image')) {
+            // Delete the old image file if it exists
+            if ($category->image && file_exists(public_path($category->image))) {
+                unlink(public_path($category->image)); // Remove the existing image file
             }
-            $imagePath = $request->file('image')->store('product_images', 'public');
-            $category->image = $imagePath;
+
+            // Get the new image and define the path directly within the public directory
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+            $destinationPath = public_path('images/category');
+
+            // Ensure the directory exists
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true); // Create the directory with proper permissions
+            }
+
+            // Move the new file to the public/images/banner directory
+            $image->move($destinationPath, $imageName);
+
+            // Save the relative path to the database
+            $category->image = 'images/category/' . $imageName;
         }
+
 
 
         $category->save();
 
-        return redirect()->route('categories.index')->with('success','data updated successfully');    }
+        return redirect()->route('categories.index')->with('success', 'data updated successfully');
+    }
     public function destroy($id)
     {
 
-        $data=Category::findOrFail($id);
+        $data = Category::findOrFail($id);
 
         $data->delete();
-        return redirect()->route('categories.index')->with('error','data deleteed successfully');
+        return redirect()->route('categories.index')->with('error', 'data deleteed successfully');
     }
 }
